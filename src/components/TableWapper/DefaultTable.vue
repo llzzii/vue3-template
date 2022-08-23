@@ -49,14 +49,14 @@
                 </slot>
               </template>
               <template
-                #footer="{ column, items, _columnIndex }"
+                #footer="{ items, _columnIndex }"
                 v-if="childItem.slots && childItem.slots?.footer"
               >
                 <slot :name="childItem.slots.footer" :items="items" :_columnIndex="_columnIndex">
                 </slot>
               </template>
               <template
-                #edit="{ row, items, _columnIndex }"
+                #edit="{ row, _columnIndex }"
                 v-if="childItem.slots && childItem.slots?.edit"
               >
                 <slot :name="childItem.slots.edit" :row="row" :_columnIndex="_columnIndex"> </slot>
@@ -94,16 +94,13 @@
             </slot>
           </template>
           <template
-            #footer="{ column, items, _columnIndex }"
+            #footer="{ items, _columnIndex }"
             v-if="columnData.slots && columnData.slots?.footer"
           >
             <slot :name="columnData.slots.footer" :items="items" :_columnIndex="_columnIndex">
             </slot>
           </template>
-          <template
-            #edit="{ row, items, _columnIndex }"
-            v-if="columnData.slots && columnData.slots?.edit"
-          >
+          <template #edit="{ row, _columnIndex }" v-if="columnData.slots && columnData.slots?.edit">
             <slot :name="columnData.slots.edit" :row="row" :_columnIndex="_columnIndex"> </slot>
           </template>
         </vxe-column>
@@ -112,14 +109,7 @@
     <template v-if="showPagination">
       <vxe-pager
         perfect
-        :layouts="[
-          'Total',
-          'PrevPage',
-          'Number',
-          'NextPage',
-          'Sizes',
-          pagination.showFullJump ? 'FullJump' : '',
-        ]"
+        :layouts="['Total', 'PrevPage', 'Number', 'NextPage', 'Sizes', 'FullJump']"
         :current-page="pagination.currentPage"
         :page-size="pagination.pageSize"
         :total="pagination.total"
@@ -130,7 +120,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { onMounted, ref, nextTick, watch, reactive } from 'vue';
+  import { onMounted, ref, nextTick, watch } from 'vue';
   import {
     defaultTableConfig,
     defaultPagination,
@@ -190,14 +180,14 @@
   );
   onMounted(() => {
     console.log('1', props);
-  });
-  nextTick(() => {
-    if (props.toolbar != null) {
-      // 将表格和工具栏进行关联
-      const $table = xTable.value;
-      const $toolbar = xToolbar.value;
-      $table.connect($toolbar);
-    }
+    nextTick(() => {
+      if (props.toolbar != null) {
+        // 将表格和工具栏进行关联
+        const $table = xTable.value;
+        const $toolbar = xToolbar.value;
+        $table?.connect($toolbar);
+      }
+    });
   });
 </script>
 

@@ -27,7 +27,6 @@
   import _ from 'lodash';
   import { defaultTableConfig, defaultTableFunc } from '@/constrant/table.constrant';
 
-  import { VxeColumnProps } from 'vxe-table';
   const pagination = reactive<any>({
     currentPage: 1,
     pageSize: 10,
@@ -41,7 +40,7 @@
   });
   const defaultTableWapper = ref({});
   const { run, data: tableData } = getTableData();
-  const columns: VxeColumnProps = [
+  const columns: any = [
     {
       key: 3,
       field: 'id',
@@ -124,15 +123,10 @@
   let handelTableDataValue = reactive<Array<any>>([]);
   const handelTableData = () => {
     if (!unref(tableData)) return [];
-    pagination.total = unref(tableData).length;
+    pagination.total = unref(tableData)?.length;
     let start = (pagination.currentPage - 1) * pagination.pageSize;
-    handelTableDataValue = unref(tableData).slice(start, start + pagination.pageSize);
+    handelTableDataValue = unref(tableData)?.slice(start, start + pagination.pageSize) || [];
     return handelTableDataValue;
-    console.log(
-      '🚀 ~ file: index.vue ~ line 42 ~ handelTableData ~ handelTableDataValue',
-      handelTableDataValue,
-      pagination,
-    );
   };
   const sumNum = (list: any[], field: string) => {
     let count = 0;
@@ -179,7 +173,7 @@
   let tableFunc = reactive<any>({
     ...defaultTableFunc,
     ...{
-      checkboxChange: ({ records, $table, ...result }) => {
+      checkboxChange: ({ records, $table }) => {
         let selectedRows = $table.getCheckboxRecords();
         console.log(
           '🚀 ~ file: table.constrant.ts ~ line 71 ~ selectedRows',
@@ -187,7 +181,7 @@
           selectedRows,
         );
       },
-      checkboxAll: ({ records, $table, ...result }) => {
+      checkboxAll: ({ records }) => {
         console.log('🚀 ~ file: table.constrant.ts ~ line 71 ~ selectedRows', records);
       },
     },
