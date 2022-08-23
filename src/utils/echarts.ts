@@ -1,7 +1,5 @@
 import * as echarts from 'echarts/core';
-import 'echarts-gl';
 import { CanvasRenderer } from 'echarts/renderers';
-import { GraphGLChart } from 'echarts-gl/charts';
 import {
   BarChart,
   LineChart,
@@ -54,7 +52,6 @@ echarts.use([
   CalendarComponent,
   GraphicComponent,
   ScatterChart,
-  GraphGLChart,
   CanvasRenderer,
 ]);
 

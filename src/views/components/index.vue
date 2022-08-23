@@ -1,6 +1,5 @@
 <template>
   <div class="container" v-contextmenu="contextmenu3">
-    <UploadFile />
     <a-space direction="vertical" class="minw200">
       <a-button v-contextmenu="contextmenu">右键菜单</a-button>
       <a-divider orientation="left" style="border-color: #7cb305" dashed
@@ -19,7 +18,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { UploadFile } from '@/components';
   import { useImageVerify } from '@/hooks/useImageVerify';
   import { randomNum } from '@/utils';
   import { onMounted, ref } from 'vue';

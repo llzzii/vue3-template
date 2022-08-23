@@ -4,8 +4,9 @@
 </div>
 
 ### 简介
-Merlin Template 是一个基于 Vue3、Vite3、TypeScript、Pinia 和 AntDesign 的vue3模版，它使用了最新的前端技术栈，可用于学习参考。
+Merlin Template 是一个基于 Vue3、Vite3、TypeScript、Pinia 和 AntDesign 的vue3示例模版，它使用了最新的前端技术栈，可用于学习参考。
 
+精简版，以用作平时实际开发
 ### 安装使用
 
 - 环境配置
@@ -14,7 +15,7 @@ Merlin Template 是一个基于 Vue3、Vite3、TypeScript、Pinia 和 AntDesign 
 - 克隆代码
 
 ```bash
-git clone https://github.com/llzzii/merlin-vue3-template.git
+git clone https://github.com/llzzii/vue3-template.git
 ```
 
 - 安装依赖

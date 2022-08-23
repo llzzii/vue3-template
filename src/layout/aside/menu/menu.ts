@@ -1,4 +1,4 @@
-import type { RouteRecordRaw, RouteMeta } from 'vue-router';
+import type { RouteMeta } from 'vue-router';
 
 export interface Menu {
   name: string;

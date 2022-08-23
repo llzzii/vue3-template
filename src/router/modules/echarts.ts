@@ -24,16 +24,5 @@ export const EchartsDemo: AppRouteRecordRaw = {
         hideTab: false,
       },
     },
-    {
-      path: 'demo2',
-      name: 'echartDemo1',
-      component: import('@/views/echarts/demo2/index.vue'),
-      meta: {
-        title: 'chart示例2',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
   ],
 };

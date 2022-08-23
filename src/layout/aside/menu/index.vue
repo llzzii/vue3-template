@@ -25,9 +25,9 @@
 </template>
 <script lang="ts" setup name="LayoutMenu">
   import { getMenu } from '@/api/menu';
-  import { computed, onMounted, reactive, ref, unref, watch } from 'vue';
+  import { onMounted, reactive, ref, unref } from 'vue';
   import SubMenu from '../menu-item/index.vue';
-  import { Menu, MenuState } from './menu';
+  import { MenuState } from './menu';
   import { RouteLocationNormalizedLoaded, useRoute, useRouter } from 'vue-router';
   import { findNode, getAllParentPath } from '@/utils/treeHelper';
   import { listenerRouteChange } from '@/logics/mitt/routeChange';

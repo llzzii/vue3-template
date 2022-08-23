@@ -1,4 +1,3 @@
-import { useFullModel } from '@/hooks/useFullModel';
 import { UserInfo } from '@/types/store';
 import { defineStore } from 'pinia';
 import { store } from '@/stores';
@@ -18,7 +17,6 @@ interface UserState {
   isLock?: boolean;
 }
 const USER_LOCAL_LOCK_KEY = 'USER_LOCAL_LOCK_KEY__';
-const { mountModel, unMountModel } = useFullModel();
 export const useUserStore = defineStore({
   id: 'app-user',
   state: (): UserState => ({
@@ -42,11 +40,7 @@ export const useUserStore = defineStore({
   actions: {
     setLockStatus(isLock) {
       this.isLock = isLock;
-      if (isLock) {
-        mountModel();
-      } else {
-        unMountModel();
-      }
+
       localCache().set(USER_LOCAL_LOCK_KEY, isLock);
     },
   },

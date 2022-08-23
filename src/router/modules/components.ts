@@ -25,61 +25,6 @@ export const ComponentsDemo: AppRouteRecordRaw = {
       },
     },
     {
-      path: 'borders',
-      name: 'bordersDemo',
-      component: import('@/views/components/borders.vue'),
-      meta: {
-        title: '边框',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
-    {
-      path: 'decoration',
-      name: 'decorationsDemo',
-      component: import('@/views/components/decorations.vue'),
-      meta: {
-        title: '装饰',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
-    {
-      path: 'lines1',
-      name: 'lines1Demo',
-      component: import('@/views/components/lines/lines1.vue'),
-      meta: {
-        title: '时间轴',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
-    {
-      path: 'lines2',
-      name: 'lines2Demo',
-      component: import('@/views/components/lines/lines2.vue'),
-      meta: {
-        title: '分类轴',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
-    {
-      path: 'fileList',
-      name: 'fileList',
-      component: import('@/views/components/file-list.vue'),
-      meta: {
-        title: '文件列表',
-        hideBreadcrumb: false,
-        hideMenu: false,
-        hideTab: false,
-      },
-    },
-    {
       path: 'canvas',
       name: 'canvas',
       component: import('@/views/components/canvas.vue'),
