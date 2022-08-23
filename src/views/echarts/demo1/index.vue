@@ -1,9 +1,7 @@
 <template>
   <a-row class="container">
     <a-col :span="6" class="mb10"><Echart :option="options" :is-loading="loading" /></a-col>
-    <a-col :span="24"
-      ><Echart :option="option2" :is-loading="loading" :theme="'dark'" :style="{ height: '500px' }"
-    /></a-col>
+    <a-col :span="24"></a-col>
   </a-row>
 </template>
 
@@ -44,64 +42,6 @@
   setTimeout(() => {
     loading.value = false;
   }, 2000);
-
-  const createNodes = (widthCount, heightCount) => {
-    let nodes: Array<{ x: number; y: number; value: number }> = [];
-    for (let i = 0; i < widthCount; i++) {
-      for (let j = 0; j < heightCount; j++) {
-        nodes.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          value: 1,
-        });
-      }
-    }
-    return nodes;
-  };
-  const createEdges = (widthCount, heightCount) => {
-    let edges: Array<{ source: number; target: number; value: number }> = [];
-    for (let i = 0; i < widthCount; i++) {
-      for (let j = 0; j < heightCount; j++) {
-        if (i < widthCount - 1) {
-          edges.push({
-            source: i + j * widthCount,
-            target: i + 1 + j * widthCount,
-            value: 1,
-          });
-        }
-        if (j < heightCount - 1) {
-          edges.push({
-            source: i + j * widthCount,
-            target: i + (j + 1) * widthCount,
-            value: 1,
-          });
-        }
-      }
-    }
-    return edges;
-  };
-
-  const option2 = {
-    series: [
-      {
-        type: 'graphGL',
-        nodes: createNodes(50, 50),
-        edges: createEdges(50, 50),
-        itemStyle: {
-          color: 'rgba(255,255,255,0.8)',
-        },
-        lineStyle: {
-          color: 'rgba(255,255,255,0.8)',
-          width: 3,
-        },
-        forceAtlas2: {
-          steps: 5,
-          jitterTolerence: 10,
-          edgeWeightInfluence: 4,
-        },
-      },
-    ],
-  };
 </script>
 <style lang="less">
   .container {

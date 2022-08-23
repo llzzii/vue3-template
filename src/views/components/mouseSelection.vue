@@ -1,9 +1,5 @@
 <template>
   <div class="container" ref="viewportRef" @mousedown="($event) => handleClickBlankArea($event)">
-    <div class="img-item" v-elementResize>
-      <img :src="demoImg" />
-    </div>
-
     <div
       v-if="mouseSelectionVisible"
       :class="`mouse-selection quadrant-${mouseSelectionQuadrant}`"
@@ -19,7 +15,6 @@
 <script lang="ts" setup>
   import { useMouseSelection } from '@/hooks/useMouseSelection';
   import { ref } from 'vue';
-  import demoImg from '@/assets/img/John_Miller.png';
 
   const viewportRef = ref<HTMLElement | undefined>();
   const { mouseSelection, mouseSelectionVisible, mouseSelectionQuadrant, updateMouseSelection } =
