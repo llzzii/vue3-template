@@ -9,7 +9,7 @@ export const REDIRECT_NAME = 'Redirect';
 export const useRedo = (_router?: Router) => {
   const { push, currentRoute } = _router || useRouter();
   const { query, params = {}, name, fullPath } = unref(currentRoute.value);
-  function redo(): Promise<boolean> {
+  async function  redo(): Promise<boolean> {
     return new Promise((resolve) => {
       if (name === REDIRECT_NAME) {
         resolve(false);

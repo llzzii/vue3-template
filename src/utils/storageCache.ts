@@ -1,3 +1,4 @@
+import { toRaw, unref } from 'vue';
 import { decodeByBase64, encryptByBase64 } from '.';
 import { isNullOrUnDef } from './is';
 
@@ -38,12 +39,22 @@ class WebStorage {
    * @memberof WebStorage
    */
   set(key: string, value: any, expire: number | null = null) {
-    const storageData = JSON.stringify({
-      value: value,
-      time: Date.now(),
-      expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null,
-    });
+    let storageData = '';
+    let cache:any=[]
+    try {
+      storageData = JSON.stringify({
+        value: toRaw(value),
+        time: Date.now(),
+        expire: !isNullOrUnDef(expire) ? new Date().getTime() + expire * 1000 : null,
+      });
+     
+    } catch (e) {
+      console.log('🚀 ~ file: storageCache.ts ~ line 50 ~ WebStorage ~ set ~ e', e);
+    }
+      
+
     const stringData = this.isEncryptToBase64 ? encryptByBase64(storageData) : storageData;
+    console.log("🚀 ~ file: storageCache.ts:61 ~ WebStorage ~ set ~ storageData", storageData,stringData)
     this.storage.setItem(this.getKey(key), stringData);
     console.log(
       `🚀 ~ file: storageCache.ts ~ WebStorage ~ set ~ size ${

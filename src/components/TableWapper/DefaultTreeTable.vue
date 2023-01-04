@@ -49,7 +49,7 @@
                 </slot>
               </template>
               <template
-                #footer="{ items, _columnIndex }"
+                #footer="{ column, items, _columnIndex }"
                 v-if="childItem.slots && childItem.slots?.footer"
               >
                 <slot :name="childItem.slots.footer" :items="items" :_columnIndex="_columnIndex">
@@ -84,7 +84,7 @@
             </slot>
           </template>
           <template
-            #footer="{ items, _columnIndex }"
+            #footer="{ column, items, _columnIndex }"
             v-if="columnData.slots && columnData.slots?.footer"
           >
             <slot :name="columnData.slots.footer" :items="items" :_columnIndex="_columnIndex">
@@ -96,7 +96,14 @@
     <template v-if="showPagination">
       <vxe-pager
         perfect
-        :layouts="['Total', 'PrevPage', 'Number', 'NextPage', 'Sizes', 'FullJump']"
+        :layouts="[
+          'Total',
+          'PrevPage',
+          'Number',
+          'NextPage',
+          'Sizes',
+          pagination.showFullJump ? 'FullJump' : '',
+        ]"
         :current-page="pagination.currentPage"
         :page-size="pagination.pageSize"
         :total="pagination.total"
@@ -107,7 +114,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { onMounted, ref, nextTick, watch } from 'vue';
+  import { onMounted, ref, nextTick, watch, reactive } from 'vue';
   import {
     defaultTableConfig,
     defaultPagination,
@@ -174,7 +181,7 @@
       // 将表格和工具栏进行关联
       const $table = xTable.value;
       const $toolbar = xToolbar.value;
-      $table?.connect($toolbar);
+      $table.connect($toolbar);
     }
   });
 </script>

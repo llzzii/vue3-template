@@ -10,7 +10,8 @@ export enum RoleEnum {
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
-  token?: string;
+  accessToken?: string;
+  refreshToken?: string;
   roleList: RoleEnum[];
   sessionTimeout?: boolean;
   lastUpdateTime: number;
@@ -23,7 +24,8 @@ export const useUserStore = defineStore({
     // user info
     userInfo: null,
     // token
-    token: undefined,
+    accessToken: localCache().get("USER_ACCESS_TOKEN_KEY__"),
+    refreshToken: localCache().get("USER_REFRESH_TOKEN_KEY__"),
     // roleList
     roleList: [],
     // Whether the login expired
@@ -36,6 +38,12 @@ export const useUserStore = defineStore({
     getLockStatus(): boolean {
       return !!this.isLock;
     },
+    getAccessToken(): string|undefined {
+      return this.accessToken;
+    },
+    getRefreshToken(): string|undefined {
+      return this.refreshToken;
+    }
   },
   actions: {
     setLockStatus(isLock) {
@@ -43,6 +51,15 @@ export const useUserStore = defineStore({
 
       localCache().set(USER_LOCAL_LOCK_KEY, isLock);
     },
+    setAccessToken(accessToken){
+      console.log("🚀 ~ file: user.ts:55 ~ setAccessToken ~ accessToken", accessToken)
+      this.accessToken = accessToken;
+      localCache().set('USER_ACCESS_TOKEN_KEY__', accessToken);
+    },
+     setRefreshToken(refreshToken){
+      this.refreshToken = refreshToken;
+      localCache().set('USER_REFRESH_TOKEN_KEY__', refreshToken);
+    }
   },
 });
 

@@ -6,6 +6,7 @@ import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 import VitePluginCertificate from 'vite-plugin-mkcert';
 import { viteMockServe } from 'vite-plugin-mock';
 import { loadEnv } from 'vite';
+import AutoImport from 'unplugin-auto-import/vite';
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => {
@@ -31,6 +32,10 @@ export default ({ mode }: ConfigEnv) => {
       }),
       VitePluginCertificate({
         source: 'coding',
+      }),
+      AutoImport({
+        imports: ['vue', 'vue-router'],
+        dts: 'src/auto-import.d.ts',
       }),
     ],
     resolve: {
@@ -77,6 +82,11 @@ export default ({ mode }: ConfigEnv) => {
           target: 'http://localhost:1000',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/qiniu-api/, ''),
+        },
+        '/api': {
+          target: 'http://localhost:19080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },

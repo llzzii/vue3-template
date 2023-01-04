@@ -1,11 +1,22 @@
 import { Recordable } from 'vite-plugin-mock';
+import type { AppRouteRecordRaw, AppRouteModule } from '/@/router/types';
 import { defineComponent } from 'vue';
 import { RouteMeta, RouteRecordRaw } from 'vue-router';
 import { ComponentsDemo } from './modules/components';
 import { EchartsDemo } from './modules/echarts';
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from './modules/error';
 import { VxeDemo } from './modules/vxeDemo';
+import { User } from './modules/user';
 export const LAYOUT = () => import('@/layout/index.vue');
+
+export const LoginRoute: AppRouteRecordRaw = {
+  path: '/login',
+  name: 'Login',
+  component: () => import('@/views/login/index.vue'),
+  meta: {
+    title: '登录',
+  },
+};
 const routers = [
   {
     path: '/',
@@ -29,11 +40,12 @@ const routers = [
     ],
   },
   VxeDemo,
-
+  User,
   EchartsDemo,
   REDIRECT_ROUTE,
   ComponentsDemo,
   PAGE_NOT_FOUND_ROUTE,
+  LoginRoute
 ];
 
 export default routers;

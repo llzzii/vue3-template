@@ -16,7 +16,7 @@ export const ComponentsDemo: AppRouteRecordRaw = {
     {
       path: 'index',
       name: 'indexDemo',
-      component: import('@/views/components/index.vue'),
+      component: ()=>import('@/views/components/index.vue'),
       meta: {
         title: '汇总',
         hideBreadcrumb: false,
@@ -27,7 +27,7 @@ export const ComponentsDemo: AppRouteRecordRaw = {
     {
       path: 'canvas',
       name: 'canvas',
-      component: import('@/views/components/canvas.vue'),
+      component:()=> import('@/views/components/canvas.vue'),
       meta: {
         title: 'canvas',
         hideBreadcrumb: false,
@@ -38,7 +38,7 @@ export const ComponentsDemo: AppRouteRecordRaw = {
     {
       path: 'mouseSelection',
       name: 'mouseSelection',
-      component: import('@/views/components/mouseSelection.vue'),
+      component: ()=>import('@/views/components/mouseSelection.vue'),
       meta: {
         title: 'mouseSelection',
         hideBreadcrumb: false,

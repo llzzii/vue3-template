@@ -26,6 +26,19 @@
   const menuStore = useMenuStore();
 
   const { currentRoute, push } = useRouter();
+  const filterItem = (list: RouteLocationMatched[]) => {
+    return treeFilter(list, (item) => {
+      const { meta, name } = item;
+      if (!meta) {
+        return !!name;
+      }
+      const { title, hideBreadcrumb, hideMenu } = meta;
+      if (!title || hideBreadcrumb || hideMenu) {
+        return false;
+      }
+      return true;
+    }).filter((item) => !item.meta?.hideBreadcrumb);
+  };
   watchEffect(() => {
     const menus: Menu[] = menuStore.getMenuData;
 
@@ -55,19 +68,7 @@
     }
     routes.value = breadcrumbList;
   });
-  const filterItem = (list: RouteLocationMatched[]) => {
-    return treeFilter(list, (item) => {
-      const { meta, name } = item;
-      if (!meta) {
-        return !!name;
-      }
-      const { title, hideBreadcrumb, hideMenu } = meta;
-      if (!title || hideBreadcrumb || hideMenu) {
-        return false;
-      }
-      return true;
-    }).filter((item) => !item.meta?.hideBreadcrumb);
-  };
+ 
   const handleClick = (route: RouteLocationMatched, paths: string[], e: Event) => {
     e?.preventDefault();
     const { children, redirect, meta } = route;

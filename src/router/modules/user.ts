@@ -3,26 +3,26 @@ import { AppRouteRecordRaw } from '..';
 export const LAYOUT = () => import('@/layout/index.vue');
 
 // 404 on a page
-export const EchartsDemo: AppRouteRecordRaw = {
-  path: '/echarts',
-  name: 'OtherDemos',
+export const User: AppRouteRecordRaw = {
+  path: '/user',
+  name: 'user',
   component: LAYOUT,
   meta: {
-    title: '各种示例',
+    title: '用户管理',
     hideBreadcrumb: false,
     hideMenu: false,
   },
   children: [
     {
-      path: 'demo1',
-      name: 'echartDemo',
-      component: ()=>import('@/views/echarts/demo1/index.vue'),
+      path: 'list',
+      name: 'userList',
+      component: ()=>import('@/views/user/user/list.vue'),
       meta: {
-        title: 'chart示例1',
+        title: '用户列表',
         hideBreadcrumb: false,
         hideMenu: false,
         hideTab: false,
       },
-    },
+    }
   ],
 };

@@ -11,11 +11,12 @@
     <vxe-table
       class="vxe-table"
       ref="xTable"
-      :data="tableData"
       :loading="loading"
-      v-bind="tableConfig"
+      :height="tableConfig.height"
       v-on="tableFunc"
     >
+    <!-- v-bind="tableConfig" -->
+
       <vxe-column v-if="showCheckbox" type="checkbox" fixed="left" width="50" />
       <vxe-column v-if="showSeq" type="seq" fixed="left" title="序号" width="80" />
       <template v-for="columnData in columns" :key="columnData.id">
@@ -49,14 +50,14 @@
                 </slot>
               </template>
               <template
-                #footer="{ items, _columnIndex }"
+                #footer="{ column, items, _columnIndex }"
                 v-if="childItem.slots && childItem.slots?.footer"
               >
                 <slot :name="childItem.slots.footer" :items="items" :_columnIndex="_columnIndex">
                 </slot>
               </template>
               <template
-                #edit="{ row, _columnIndex }"
+                #edit="{ row, items, _columnIndex }"
                 v-if="childItem.slots && childItem.slots?.edit"
               >
                 <slot :name="childItem.slots.edit" :row="row" :_columnIndex="_columnIndex"> </slot>
@@ -94,13 +95,16 @@
             </slot>
           </template>
           <template
-            #footer="{ items, _columnIndex }"
+            #footer="{ column, items, _columnIndex }"
             v-if="columnData.slots && columnData.slots?.footer"
           >
             <slot :name="columnData.slots.footer" :items="items" :_columnIndex="_columnIndex">
             </slot>
           </template>
-          <template #edit="{ row, _columnIndex }" v-if="columnData.slots && columnData.slots?.edit">
+          <template
+            #edit="{ row, items, _columnIndex }"
+            v-if="columnData.slots && columnData.slots?.edit"
+          >
             <slot :name="columnData.slots.edit" :row="row" :_columnIndex="_columnIndex"> </slot>
           </template>
         </vxe-column>
@@ -109,9 +113,16 @@
     <template v-if="showPagination">
       <vxe-pager
         perfect
-        :layouts="['Total', 'PrevPage', 'Number', 'NextPage', 'Sizes', 'FullJump']"
-        :current-page="pagination.currentPage"
-        :page-size="pagination.pageSize"
+        :layouts="[
+          'Total',
+          'PrevPage',
+          'Number',
+          'NextPage',
+          'Sizes',
+          pagination.showFullJump ? 'FullJump' : '',
+        ]"
+        v-model:current-page="pagination.currentPage"
+        v-model:page-size="pagination.pageSize"
         :total="pagination.total"
         @page-change="pagination.onTableChange"
         style="height: 48px !important"
@@ -120,7 +131,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { onMounted, ref, nextTick, watch } from 'vue';
+  import { onMounted, ref, nextTick, watch, reactive } from 'vue';
   import {
     defaultTableConfig,
     defaultPagination,
@@ -136,6 +147,7 @@
     VxeToolbarInstance,
     VxeToolbarProps,
   } from 'vxe-table';
+import { setTableHeight } from '@/utils/tableFn';
 
   const props = withDefaults(
     defineProps<{
@@ -165,30 +177,45 @@
   );
   let xTable = ref({} as VxeTableInstance);
   let xToolbar = ref({} as VxeToolbarInstance);
+  const emits=defineEmits(['onTableChange'])
   // let configOptions = reactive<any>({});
   // let configPagination = reactive<any>({});
   watch(
     () => props.tableData,
     () => {
-      console.log(
-        '🚀 ~ file: DefaultTable.vue ~ line 210 ~ props.tableData',
-        props.tableData,
-        props.tableFunc,
-      );
+      nextTick(() => {
+        const $table = xTable.value;
+      console.log("🚀 ~ file: DefaultTable.vue:187 ~ $table", $table)
+      if ($table) {
+        $table.reloadData(props.tableData);
+      }
+      })
+     
     },
     { immediate: true, deep: true },
   );
+  const onTableChange = (e) => {
+      e.current = e.currentPage;
+      emits("onTableChange", e);
+    };
   onMounted(() => {
     console.log('1', props);
-    nextTick(() => {
-      if (props.toolbar != null) {
-        // 将表格和工具栏进行关联
-        const $table = xTable.value;
-        const $toolbar = xToolbar.value;
-        $table?.connect($toolbar);
-      }
-    });
   });
+  nextTick(() => {
+    if (props.toolbar != null) {
+      // 将表格和工具栏进行关联
+      const $table = xTable.value;
+      const $toolbar = xToolbar.value;
+      $table.connect($toolbar);
+    }
+    if(!props.tableConfig?.height){
+      props.tableConfig.height=setTableHeight(props)
+      // props.tableConfig.height=1000
+      xTable.value.refreshScroll()
+    }
+    console.log("🚀 ~ file: DefaultTable.vue:208 ~ nextTick ~ props.tableConfig", props.tableConfig)
+  });
+    
 </script>
 
 <style lang="less">

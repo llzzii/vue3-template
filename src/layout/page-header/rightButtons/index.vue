@@ -1,6 +1,6 @@
 <template>
   <a-space class="header-r-buttons">
-    <a class="h-btn" href="https://github.com/llzzii/vue3-template" target="_blank">
+    <a class="h-btn" href="https://github.com/llzzii/merlin-vue3-template" target="_blank">
       <i class="iconfont icon-github-fill"></i>
     </a>
     <a class="h-btn" @click="changeFullScreen">
@@ -17,7 +17,9 @@
     <a class="h-btn">
       <i class="iconfont icon-zhuti_o"></i>
     </a>
-
+    <a class="h-btn" @click="lockScreen">
+      <i class="iconfont icon-suoping"></i>
+    </a>
     <a class="h-btn">
       <i class="iconfont icon-xitong"></i>
     </a>
