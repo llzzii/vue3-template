@@ -51,10 +51,13 @@ declare module '@vue/runtime-core' {
     IconfontIcon: typeof import('./src/components/Icon/component/IconfontIcon.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    LinkBtn: typeof import('./src/components/LinkBtn/index.vue')['default']
     Loading: typeof import('./src/components/Loading/index.vue')['default']
     MenuContent: typeof import('./src/components/Contextmenu/menuContent.vue')['default']
+    MoreActions: typeof import('./src/components/MoreActions/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StatusLabel: typeof import('./src/components/StatusLabel/index.vue')['default']
     SvgIcon: typeof import('./src/components/Icon/component/SvgIcon.vue')['default']
   }
 }

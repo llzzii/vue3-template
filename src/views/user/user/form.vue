@@ -1,5 +1,6 @@
 <template>
-  <a-button type="primary" @click="add">新增</a-button>
+  <a-button v-if="!isEdit" type="primary" @click="add">新增</a-button>
+  <a-button type="link" class="table-link-btn" :disabled="rowData?.id==1" v-else  @click="update">编辑</a-button>
   <a-drawer
     v-model:visible="visible"
     class="custom-class"
@@ -8,10 +9,12 @@
     width="700"
     @after-visible-change="afterVisibleChange"
   >
-    <template #title> 新增用户 </template>
+    <template #title> {{!isEdit?'新增':"编辑"}}用户 </template>
     <template #extra>
-      <a-button type="primary" @click="submit">确定</a-button>
-      <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
+      <a-space>
+        <a-button type="primary" @click="submit">确定</a-button>
+        <a-button style="margin-right: 8px" @click="onClose">取消</a-button>
+      </a-space>
     </template>
     <a-form :label-col="{ span: 6 }" ref="formRef" :model="formState" :wrapper-col="{ span: 17 }">
       <a-row :gutter="10">
@@ -39,7 +42,7 @@
         </a-col>
       </a-row>
       <a-row :gutter="10">
-        <a-col span="12">
+        <a-col span="12" v-if="!isEdit">
           <a-form-item label="密码" v-bind="validateInfos.p6d">
             <a-input type="password" v-model:value="formState.p6d" />
           </a-form-item>
@@ -70,9 +73,19 @@
 <script lang="ts" setup>
   import { Form, FormInstance } from 'ant-design-vue';
   import { User, userRules } from './user.instance';
-import { UserService } from '../user.service';
+  import { UserService } from '../user.service';
+import _ from 'lodash';
 
-const emits=defineEmits(['refresh'])
+  const emits = defineEmits(['refresh']);
+  const props = withDefaults(
+    defineProps<{
+      rowData?:any;
+    }>(),
+    {
+      rowData: null,
+    },
+  );
+  const isEdit=computed(()=>props.rowData!=null)
   const visible = ref(false);
   const formRef = ref<FormInstance>();
   const formState = reactive<User>({
@@ -92,23 +105,28 @@ const emits=defineEmits(['refresh'])
     resetFields();
     visible.value = true;
   };
-  const {run,data}=UserService.addUser();
+  const { run:runCreate  } = UserService.addUser();
+  const { run:runUpdate } = UserService.updateUser();
   const submit = async () => {
-   await validate()
-      .then(async() => {
+    await validate()
+      .then(async () => {
         console.log(toRaw(formState));
-       const res= await run(formState)
-        console.log("🚀 ~ file: form.vue:100 ~ .then ~ res", res)
-        if(res?.code==='0000'){
-          emits('refresh')
+        const res = !isEdit?await runCreate(formState):await runUpdate(formState);
+        console.log('🚀 ~ file: form.vue:100 ~ .then ~ res', res);
+        if (res?.code === '0000') {
+          emits('refresh');
           visible.value = false;
-
         }
       })
       .catch((err) => {
         console.log('error', err);
       });
   };
+  const update=()=>{
+    resetFields();
+    _.assign(formState, props.rowData);
+    visible.value = true;
+  }
   const afterVisibleChange = (bool: boolean) => {
     console.log('visible', bool);
   };

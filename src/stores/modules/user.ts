@@ -59,6 +59,11 @@ export const useUserStore = defineStore({
      setRefreshToken(refreshToken){
       this.refreshToken = refreshToken;
       localCache().set('USER_REFRESH_TOKEN_KEY__', refreshToken);
+    },
+    loginOut(){
+      this.accessToken = undefined;
+      this.refreshToken = undefined;
+      localCache().clear();
     }
   },
 });

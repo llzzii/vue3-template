@@ -41,10 +41,13 @@ export class HttpService {
     // 是否自动调用
     autoRun: false,
     // 调用完毕可执行的函数
-    onFinish: (res: ResponseResp<any>): any => {
+    onFinish: (res: ResponseResp<any>,option?): any => {
       let output = {};
       if (res.code == '0000') {
         output = res.data;
+        if(res['msg']&&!(option&&option['outMsg'])){
+          message.success(res['msg'])
+        }
       } else {
         output = {};
         Modal.error({
@@ -239,14 +242,14 @@ export class HttpService {
       msg: '',
       data: undefined,
     };
-    const run = async (params = {}) => {
+    const run = async (...params) => {
       paramsCache.value = params;
       // const option = Object.assign({}, this.defaultOption, options);
       loading.value = true;
-      const r: ResponseResp<T> = await promiseRequests(params);
+      const r: ResponseResp<T> = await promiseRequests(...params);
       loading.value = false;
       Object.assign(output, r);
-      output.data = option.onFinish(r);
+      output.data = option.onFinish(r,option);
       res.value = output.data;
       option.polling && _.delay(run, option.pollingInterval as number);
       return output;

@@ -33,7 +33,7 @@
         <a-menu>
           <a-menu-item key="0"> 系统配置 </a-menu-item>
           <a-menu-item key="1"> 个人中心 </a-menu-item>
-          <a-menu-item key="3">退出登录</a-menu-item>
+          <a-menu-item key="3" @click="loginOut">退出登录</a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
@@ -50,6 +50,8 @@
   const isFULL = ref(isFullscreen());
   const notificationCount = ref(10);
   const userStore = useUserStore();
+  const router = useRouter();
+
   const changeFullScreen = () => {
     if (isFULL.value) {
       exitFullscreen();
@@ -80,6 +82,10 @@
   const lockScreen = () => {
     userStore.setLockStatus(true);
     console.log('🚀 ~ file: index.vue ~ line 82 ~ lockScreen ~ userStore', userStore.getLockStatus);
+  };
+  const loginOut = () => {
+    router.push('/login');
+    userStore.loginOut();
   };
 </script>
 <style lang="less" scoped>
