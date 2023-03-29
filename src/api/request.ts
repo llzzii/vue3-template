@@ -93,7 +93,7 @@ export class HttpService {
             onOk: () => {
               // const router = useRouter();
               //@ts-ignore
-              window.$router.push('/login');
+              // window.$router.push('/login');
             },
           });
         }

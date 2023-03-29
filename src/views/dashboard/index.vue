@@ -1,4 +1,7 @@
 <template>
+  <div class="banner" :style="{'background':bgcolor}">
+    <img :src="bannerSrc" />
+  </div>
   <div class="header">
     <a-row :gutter="10">
       <a-col :span="6">
@@ -93,9 +96,19 @@
       </a-col>
     </a-row>
   </div>
+  <div>
+    <a-upload v-model:file-list="fileList" :before-upload="beforeUpload">
+      <a-button>
+        <upload-outlined></upload-outlined>
+        Upload
+      </a-button>
+    </a-upload>
+  </div>
 </template>
 <script lang="ts" setup>
   import { CountTo } from '@/components';
+  import { UseHandleImg } from '@/hooks/useHandleImg';
+  import { UploadProps } from 'ant-design-vue';
   import { reactive, ref } from 'vue';
   const titleData = reactive({
     data1: 185362,
@@ -108,6 +121,7 @@
     data8: 4895362,
   });
   const percent = ref(0);
+  const fileList = ref([]);
   const timer = setInterval(() => {
     if (percent.value < (100 * titleData.data3) / titleData.data4) {
       percent.value++;
@@ -115,6 +129,23 @@
       clearInterval(timer);
     }
   }, 100);
+  let bannerSrc = ref('');
+  let bgcolor = ref('#fff');
+  const { getImgThemeColor } = UseHandleImg();
+  const beforeUpload: UploadProps['beforeUpload'] = (file) => {
+    return new Promise(async (resolve: any) => {
+      const reader = new FileReader();
+      await reader.readAsDataURL(file);
+
+      reader.onload = async () => {
+        bannerSrc.value = reader.result as string;
+
+        const color =await getImgThemeColor(reader.result as string);
+        bgcolor.value=color?`rgb(${color[0]},${color[1]},${color[2]})`:''
+        console.log('🚀 ~ file: index.vue:135 ~ returnnewPromise ~ file:', color);
+      };
+    });
+  };
 </script>
 <style lang="less" scoped>
   .header {
@@ -135,5 +166,11 @@
     margin: 0;
     padding: 0 10px;
     color: #000000d9;
+  }
+  .banner {
+    text-align: center;
+    img {
+      width: 800px;
+    }
   }
 </style>

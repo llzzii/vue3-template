@@ -67,6 +67,7 @@
     "vitest": "^0.9.3",
     "webpack":"5.0.0",
     "vue-eslint-parser": "^8.3.0",
+    "vite-plugin-progress": "^0.0.6",
     "vue-tsc": "^0.33.9"
   },
   "volta": {

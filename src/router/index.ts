@@ -6,7 +6,7 @@ import { ComponentsDemo } from './modules/components';
 import { EchartsDemo } from './modules/echarts';
 import { PAGE_NOT_FOUND_ROUTE, REDIRECT_ROUTE } from './modules/error';
 import { VxeDemo } from './modules/vxeDemo';
-import { User } from './modules/user';
+import { System } from './modules/system';
 export const LAYOUT = () => import('@/layout/index.vue');
 
 export const LoginRoute: AppRouteRecordRaw = {
@@ -40,7 +40,7 @@ const routers = [
     ],
   },
   VxeDemo,
-  User,
+  System,
   EchartsDemo,
   REDIRECT_ROUTE,
   ComponentsDemo,

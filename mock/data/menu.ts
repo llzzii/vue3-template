@@ -112,13 +112,13 @@ const system = {
   id: '4',
   icon: 'icon-xitong',
   name: '系统',
-  path: '/system',
+  path: '/system2',
   children: [
     {
       id: '4-1',
       icon: 'icon-zuozhe',
       name: '个人设置',
-      path: '/system/user',
+      path: '/system2/user',
       children: [],
     },
   ],
@@ -235,17 +235,23 @@ const cssDemo = {
 const User = {
   id: '10',
   icon: 'icon-CSS-',
-  name: '用户管理',
-  path: '/user',
+  name: '系统管理',
+  path: '/system',
   children: [
     {
       id: '10-1',
       icon: 'icon-ziyuan1672',
-      name: '用户列表',
-      path: '/user/list',
+      name: '用户管理',
+      path: '/system/user',
       children: [],
     },
-   
+    {
+      id: '10-2',
+      icon: 'icon-ziyuan1672',
+      name: '菜单管理',
+      path: '/system/menu',
+      children: [],
+    },
   ],
 };
 const menuList = [dashboard, management, components, demos, echarts, system, cssDemo,User];

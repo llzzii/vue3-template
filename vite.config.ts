@@ -7,7 +7,7 @@ import VitePluginCertificate from 'vite-plugin-mkcert';
 import { viteMockServe } from 'vite-plugin-mock';
 import { loadEnv } from 'vite';
 import AutoImport from 'unplugin-auto-import/vite';
-
+import progress from 'vite-plugin-progress'
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => {
   const root = process.cwd();
@@ -37,6 +37,8 @@ export default ({ mode }: ConfigEnv) => {
         imports: ['vue', 'vue-router'],
         dts: 'src/auto-import.d.ts',
       }),
+       // 打包进度条展示
+       progress()
     ],
     resolve: {
       alias: {
@@ -67,7 +69,7 @@ export default ({ mode }: ConfigEnv) => {
     },
     server: {
       https: true,
-
+      open:true,
       // Listening on all local IPs
       host: true,
       port: Number(VITE_PORT),

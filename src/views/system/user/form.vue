@@ -72,8 +72,8 @@
 </template>
 <script lang="ts" setup>
   import { Form, FormInstance } from 'ant-design-vue';
-  import { User, userRules } from './user.instance';
-  import { UserService } from '../user.service';
+  import { User, userRules } from './user.interface';
+  import { UserService } from './user.service';
 import _ from 'lodash';
 
   const emits = defineEmits(['refresh']);
