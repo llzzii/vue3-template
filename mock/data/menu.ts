@@ -137,11 +137,12 @@ const echarts = {
       path: '/echarts/demo1',
       children: [],
     },
+   
     {
-      id: '5-2',
-      icon: 'icon-kebianjibiaoge',
-      name: '大屏',
-      path: '/echarts/demo2',
+      id: '5-3',
+      icon: 'icon-tubiao-zhexiantu',
+      name: '并发图表',
+      path: '/echarts/demo3',
       children: [],
     },
   ],
